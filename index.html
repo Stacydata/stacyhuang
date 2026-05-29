@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stacy Huang — Technical Product Manager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #09090f;
+      --surface:   #111118;
+      --surface2:  #18181f;
+      --border:    #252530;
+      --accent:    #6366f1;
+      --accent2:   #818cf8;
+      --accent-g:  #4ade80;
+      --text:      #f0f0f6;
+      --muted:     #8888aa;
+      --dim:       #44445a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.1rem 2.5rem;
+      background: rgba(9,9,15,0.8);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-size: 1.05rem; font-weight: 800; letter-spacing: -0.5px;
+      color: var(--text); text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--muted); font-size: 0.85rem;
+      font-weight: 500; transition: color 0.2s; letter-spacing: 0.2px;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: var(--accent); color: #fff; padding: 0.5rem 1.2rem;
+      border-radius: 7px; text-decoration: none; font-size: 0.82rem;
+      font-weight: 600; transition: all 0.2s;
+    }
+    .nav-cta:hover { background: #5254e7; box-shadow: 0 4px 16px rgba(99,102,241,0.35); }
+
+    /* ─── HERO ────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh; display: flex; align-items: center;
+      padding: 8rem 2.5rem 5rem;
+      position: relative; overflow: hidden;
+    }
+    #hero::before {
+      content: '';
+      position: absolute; top: -20%; right: -5%;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(99,102,241,0.13) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    #hero::after {
+      content: '';
+      position: absolute; bottom: -20%; left: -10%;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(129,140,248,0.07) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero-inner { max-width: 1080px; margin: 0 auto; width: 100%; }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(99,102,241,0.1); border: 1px solid rgba(99,102,241,0.28);
+      color: var(--accent2); padding: 0.3rem 0.9rem; border-radius: 100px;
+      font-size: 0.78rem; font-weight: 600; margin-bottom: 1.75rem; letter-spacing: 0.4px;
+    }
+    .hero-badge::before {
+      content: ''; width: 6px; height: 6px;
+      background: var(--accent-g); border-radius: 50%; flex-shrink: 0;
+    }
+
+    .hero-title {
+      font-size: clamp(2.8rem, 6vw, 5rem); font-weight: 900;
+      line-height: 1.08; letter-spacing: -2.5px; margin-bottom: 1.5rem;
+    }
+    .hero-title .gradient {
+      background: linear-gradient(140deg, #818cf8 20%, #c084fc 80%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-role {
+      font-size: 1.25rem; font-weight: 500; color: var(--accent2);
+      letter-spacing: 0.5px; margin-bottom: 1.5rem; margin-top: 0.25rem;
+    }
+
+    .hero-sub {
+      font-size: 1.1rem; color: var(--muted); max-width: 560px;
+      margin-bottom: 2.5rem; line-height: 1.8; font-weight: 400;
+    }
+
+    .hero-stats {
+      display: flex; gap: 2.5rem; margin-bottom: 2.75rem; flex-wrap: wrap;
+    }
+    .stat-val {
+      display: block; font-size: 1.9rem; font-weight: 900;
+      letter-spacing: -1.5px; color: var(--text); line-height: 1;
+    }
+    .stat-val span { color: var(--accent); }
+    .stat-lbl {
+      display: block; font-size: 0.78rem; color: var(--muted); margin-top: 0.25rem;
+    }
+
+    .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.8rem 1.8rem; border-radius: 8px; font-size: 0.9rem;
+      font-weight: 600; text-decoration: none; transition: all 0.2s; cursor: pointer; border: none;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: #5254e7; transform: translateY(-2px); box-shadow: 0 10px 28px rgba(99,102,241,0.35); }
+    .btn-secondary { background: transparent; color: var(--text); border: 1px solid var(--border); }
+    .btn-secondary:hover { border-color: rgba(99,102,241,0.5); color: var(--accent2); transform: translateY(-2px); }
+
+    .scroll-indicator {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+      color: var(--dim); font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
+    }
+    .scroll-line {
+      width: 1px; height: 44px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      animation: pulse 2.2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.25; }
+      50% { opacity: 1; }
+    }
+
+    /* ─── SECTION SCAFFOLD ────────────────────────────── */
+    section { padding: 6rem 2.5rem; }
+    .inner { max-width: 1080px; margin: 0 auto; width: 100%; }
+
+    .sec-label {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 0.6rem;
+    }
+    .sec-title {
+      font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 800;
+      letter-spacing: -1.2px; line-height: 1.15; margin-bottom: 1rem;
+    }
+    .sec-desc {
+      color: var(--muted); font-size: 0.975rem; max-width: 560px;
+      line-height: 1.8; margin-bottom: 3rem;
+    }
+
+    /* ─── ABOUT ───────────────────────────────────────── */
+    #about { background: var(--surface); }
+
+    .about-grid {
+      display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 4rem; align-items: start;
+    }
+    .about-text p {
+      color: var(--muted); line-height: 1.85; margin-bottom: 1.2rem; font-size: 0.975rem;
+    }
+    .about-text strong { color: var(--text); font-weight: 600; }
+
+    .competency-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-top: 1.75rem;
+    }
+    .comp-tag {
+      background: rgba(99,102,241,0.07); border: 1px solid rgba(99,102,241,0.18);
+      color: var(--accent2); padding: 0.45rem 0.85rem; border-radius: 6px;
+      font-size: 0.78rem; font-weight: 500; text-align: center;
+    }
+
+    .info-cards { display: flex; flex-direction: column; gap: 1.25rem; }
+    .info-card {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.4rem;
+    }
+    .info-card-title {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 1.8px;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 1rem;
+    }
+    .info-row {
+      display: flex; align-items: flex-start; gap: 0.7rem; margin-bottom: 0.75rem;
+    }
+    .info-row:last-child { margin-bottom: 0; }
+    .info-icon { font-size: 1rem; margin-top: 0.05rem; flex-shrink: 0; }
+    .info-row strong { display: block; font-size: 0.87rem; font-weight: 600; color: var(--text); }
+    .info-row span { font-size: 0.79rem; color: var(--muted); }
+
+    /* ─── EXPERIENCE ──────────────────────────────────── */
+    #experience { background: var(--bg); }
+
+    .timeline { position: relative; padding-left: 1.75rem; }
+    .timeline::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+      width: 1px; background: linear-gradient(to bottom, var(--accent) 0%, transparent 100%);
+    }
+    .tl-item { position: relative; padding-bottom: 3rem; }
+    .tl-item:last-child { padding-bottom: 0; }
+    .tl-dot {
+      position: absolute; left: -2.1rem; top: 0.3rem;
+      width: 11px; height: 11px; background: var(--accent); border-radius: 50%;
+      border: 2px solid var(--bg); box-shadow: 0 0 0 3px rgba(99,102,241,0.2);
+    }
+    .tl-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      gap: 0.75rem; margin-bottom: 0.35rem; flex-wrap: wrap;
+    }
+    .tl-role { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.3px; }
+    .tl-period {
+      font-size: 0.77rem; color: var(--dim); background: var(--surface2);
+      border: 1px solid var(--border); padding: 0.22rem 0.7rem; border-radius: 100px;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .tl-company { font-size: 0.85rem; color: var(--accent2); font-weight: 500; margin-bottom: 1rem; }
+
+    .tl-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .tl-list li {
+      font-size: 0.875rem; color: var(--muted); padding-left: 1.2rem;
+      position: relative; line-height: 1.7;
+    }
+    .tl-list li::before {
+      content: '→'; position: absolute; left: 0;
+      color: var(--accent); font-size: 0.78rem; top: 0.22rem;
+    }
+    .tl-list strong { color: var(--text); font-weight: 600; }
+
+    .badge {
+      display: inline-block; background: rgba(74,222,128,0.08);
+      border: 1px solid rgba(74,222,128,0.22); color: #4ade80;
+      padding: 0.08rem 0.5rem; border-radius: 4px;
+      font-size: 0.78rem; font-weight: 600;
+    }
+
+    /* ─── FEATURED WORK ───────────────────────────────── */
+    #work { background: var(--surface); }
+
+    .work-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .work-grid-2 {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;
+    }
+
+    .work-card {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 16px; padding: 1.75rem;
+      transition: all 0.3s; position: relative; overflow: hidden;
+    }
+    .work-card::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 2px; background: linear-gradient(90deg, var(--accent), transparent);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .work-card:hover { border-color: rgba(99,102,241,0.3); transform: translateY(-4px); box-shadow: 0 20px 45px rgba(0,0,0,0.35); }
+    .work-card:hover::after { opacity: 1; }
+
+    .work-num {
+      font-size: 2.8rem; font-weight: 900; line-height: 1;
+      color: transparent; -webkit-text-stroke: 1px var(--border);
+      margin-bottom: 1rem; letter-spacing: -2px;
+    }
+    .work-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+    .work-tag {
+      background: rgba(99,102,241,0.09); border: 1px solid rgba(99,102,241,0.2);
+      color: var(--accent2); padding: 0.22rem 0.7rem; border-radius: 100px;
+      font-size: 0.73rem; font-weight: 500;
+    }
+    .work-title {
+      font-size: 1.05rem; font-weight: 700; letter-spacing: -0.3px;
+      line-height: 1.3; margin-bottom: 0.7rem; color: var(--text);
+    }
+    .work-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.75; margin-bottom: 1.2rem; }
+
+    .work-points { list-style: none; display: flex; flex-direction: column; gap: 0.45rem; }
+    .work-points li {
+      font-size: 0.8rem; color: var(--dim); padding-left: 0.9rem;
+      position: relative; line-height: 1.55;
+    }
+    .work-points li::before {
+      content: '·'; position: absolute; left: 0;
+      color: var(--accent); font-size: 1.3rem; line-height: 0.9;
+    }
+
+    .impact-metric {
+      display: inline-flex; align-items: baseline; gap: 0.25rem;
+      background: rgba(99,102,241,0.08); border: 1px solid rgba(99,102,241,0.2);
+      color: var(--accent2); padding: 0.08rem 0.5rem; border-radius: 4px;
+      font-size: 0.78rem; font-weight: 700; margin: 0 0.15rem;
+    }
+
+    /* ─── MORE PROJECTS ───────────────────────────────── */
+    #more { background: var(--bg); }
+
+    .mini-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+    }
+    .mini-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.4rem; transition: all 0.25s;
+    }
+    .mini-card:hover { border-color: rgba(99,102,241,0.3); transform: translateY(-3px); }
+    .mini-icon { font-size: 1.5rem; margin-bottom: 0.75rem; }
+    .mini-company { font-size: 0.72rem; color: var(--accent); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 0.4rem; }
+    .mini-title { font-size: 0.93rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; letter-spacing: -0.2px; }
+    .mini-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.65; }
+
+    /* ─── SKILLS ──────────────────────────────────────── */
+    #skills { background: var(--surface); }
+
+    .skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+    .skill-card {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.6rem; transition: border-color 0.2s;
+    }
+    .skill-card:hover { border-color: rgba(99,102,241,0.3); }
+    .skill-header {
+      display: flex; align-items: center; gap: 0.6rem;
+      margin-bottom: 1rem; font-size: 0.92rem; font-weight: 700; color: var(--text);
+    }
+    .skill-ico {
+      display: flex; align-items: center; justify-content: center;
+      width: 30px; height: 30px; background: rgba(99,102,241,0.1);
+      border-radius: 7px; font-size: 0.95rem;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+    .tag {
+      background: var(--surface); border: 1px solid var(--border);
+      color: var(--muted); padding: 0.28rem 0.7rem; border-radius: 6px;
+      font-size: 0.77rem; font-weight: 500;
+    }
+
+    /* ─── CONTACT ─────────────────────────────────────── */
+    #contact { background: var(--bg); text-align: center; }
+    #contact .inner { display: flex; flex-direction: column; align-items: center; }
+    #contact .sec-desc { text-align: center; max-width: 480px; }
+
+    .contact-row { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-top: 2.25rem; }
+    .contact-link {
+      display: flex; align-items: center; gap: 0.75rem;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1rem 1.6rem; text-decoration: none;
+      color: var(--text); font-size: 0.875rem; font-weight: 500; transition: all 0.2s;
+    }
+    .contact-link:hover {
+      border-color: rgba(99,102,241,0.4); color: var(--accent2);
+      transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,0.25);
+    }
+    .c-icon { font-size: 1.25rem; }
+
+    /* ─── FOOTER ──────────────────────────────────────── */
+    footer {
+      background: var(--surface); border-top: 1px solid var(--border);
+      text-align: center; padding: 1.75rem 2rem;
+      color: var(--dim); font-size: 0.78rem;
+    }
+
+    /* ─── FADE-IN ──────────────────────────────────────── */
+    .fade { opacity: 0; transform: translateY(22px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .fade.visible { opacity: 1; transform: none; }
+    .fade-d1 { transition-delay: 0.1s; }
+    .fade-d2 { transition-delay: 0.2s; }
+    .fade-d3 { transition-delay: 0.3s; }
+
+    /* ─── RESPONSIVE ──────────────────────────────────── */
+    @media (max-width: 900px) {
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .work-grid { grid-template-columns: 1fr; }
+      .work-grid-2 { grid-template-columns: 1fr; }
+      .mini-grid { grid-template-columns: 1fr 1fr; }
+      .skills-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { display: none; }
+      section { padding: 4rem 1.25rem; }
+      .hero-stats { gap: 1.5rem; }
+      .hero-cta { flex-direction: column; }
+      .mini-grid { grid-template-columns: 1fr; }
+      .contact-row { flex-direction: column; align-items: stretch; }
+      .competency-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ─────────────────────────────────────────────── -->
+<nav>
+  <a href="#hero" class="nav-logo">Stacy<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="mailto:stacyyu767@gmail.com" class="nav-cta">Get in touch ↗</a>
+</nav>
+
+<!-- ── HERO ─────────────────────────────────────────────── -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">Open to new opportunities · London, UK</div>
+
+    <h1 class="hero-title">
+      Stacy Huang
+    </h1>
+    <p class="hero-role">Product Manager</p>
+
+    <p class="hero-sub">
+      Technical Product Manager with 5+ years delivering B2B platforms, API integrations,
+      and digital products across the UK and APAC — from fintech infrastructure to AI consumer apps.
+    </p>
+
+    <div class="hero-stats">
+      <div>
+        <span class="stat-val">5<span>+</span></span>
+        <span class="stat-lbl">Years Experience</span>
+      </div>
+      <div>
+        <span class="stat-val">17</span>
+        <span class="stat-lbl">Banks Integrated</span>
+      </div>
+      <div>
+        <span class="stat-val">2K<span>+</span></span>
+        <span class="stat-lbl">Merchants Enabled</span>
+      </div>
+      <div>
+        <span class="stat-val">30<span>%</span></span>
+        <span class="stat-lbl">Faster Onboarding</span>
+      </div>
+    </div>
+
+    <div class="hero-cta">
+      <a href="#work" class="btn btn-primary">View my work →</a>
+      <a href="#contact" class="btn btn-secondary">Get in touch</a>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- ── ABOUT ─────────────────────────────────────────────── -->
+<section id="about">
+  <div class="inner">
+    <p class="sec-label">About me</p>
+    <h2 class="sec-title">System thinker. Delivery executor.</h2>
+
+    <div class="about-grid">
+      <div class="about-text fade">
+        <p>
+          I'm <strong>Stacy Huang</strong>, a Technical Product Manager based in London with 5+ years of experience
+          building B2B platform, integration, and digital products across the UK and APAC.
+        </p>
+        <p>
+          My background spans <strong>API-driven systems, third-party integrations, onboarding workflows,
+          data schema design</strong>, and regulated product delivery. I specialise in transforming complex
+          business needs into structured, data-driven product solutions with measurable impact.
+        </p>
+        <p>
+          I bring hands-on credibility across engineering, operations, compliance, external partners,
+          and business stakeholders — combining <strong>system-level thinking, commercial awareness,
+          and structured execution</strong> to align cross-functional teams and ship scalable products.
+        </p>
+
+        <div class="competency-grid">
+          <div class="comp-tag">API &amp; Integrations</div>
+          <div class="comp-tag">Payments &amp; Fintech</div>
+          <div class="comp-tag">AI Products</div>
+          <div class="comp-tag">B2B Platforms</div>
+          <div class="comp-tag">Regulated Delivery</div>
+          <div class="comp-tag">Agile PM</div>
+        </div>
+      </div>
+
+      <div class="info-cards fade fade-d1">
+        <div class="info-card">
+          <div class="info-card-title">Location &amp; Availability</div>
+          <div class="info-row">
+            <span class="info-icon">📍</span>
+            <div>
+              <strong>London, UK</strong>
+              <span>Open to hybrid and remote roles</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <span class="info-icon" style="color:var(--accent-g)">●</span>
+            <div>
+              <strong>Available now</strong>
+              <span>Actively seeking new opportunities</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-title">Education</div>
+          <div class="info-row">
+            <span class="info-icon">🎓</span>
+            <div>
+              <strong>MSc Management of Information Systems</strong>
+              <span>Warwick Business School · Merit · 2023–2024</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <span class="info-icon">🎓</span>
+            <div>
+              <strong>BA English Literature</strong>
+              <span>National Central University, Taiwan · 2012–2017</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-title">Languages</div>
+          <div class="info-row">
+            <span class="info-icon">🇬🇧</span>
+            <div>
+              <strong>English</strong>
+              <span>Professional proficiency</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <span class="info-icon">🇹🇼</span>
+            <div>
+              <strong>Mandarin Chinese</strong>
+              <span>Native</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── EXPERIENCE ─────────────────────────────────────────── -->
+<section id="experience">
+  <div class="inner">
+    <p class="sec-label">Career Journey</p>
+    <h2 class="sec-title">Where I've delivered impact</h2>
+    <p class="sec-desc">A track record of shipping products across fintech, AI, and enterprise platforms in regulated and complex environments.</p>
+
+    <div class="timeline fade">
+
+      <!-- Holo AI Lab -->
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-header">
+          <span class="tl-role">Product Manager — Consumer AI Applications</span>
+          <span class="tl-period">Mar 2025 – Jan 2026</span>
+        </div>
+        <div class="tl-company">Holo AI Lab · London, UK</div>
+        <ul class="tl-list">
+          <li>Owned product delivery for two UK-based digital products across distributed engineering teams in the UK, Turkey, and China, managing scope, technical dependencies, milestones, and release readiness within 4-month cycles.</li>
+          <li>Defined product requirements, user flows, acceptance criteria, edge cases, and launch metrics for third-party <strong>API and model integration</strong> workstreams, balancing reliability, performance, cost, and user experience.</li>
+          <li>Reduced time-to-market by <span class="badge">25%</span> by translating ambiguous product ideas into structured specifications, executable system schemas, and clear delivery requirements for design and engineering.</li>
+          <li>Led end-to-end redesign of the <strong>Style Advisor app</strong> — aligning roadmap priorities, UX decisions, and engineering scope to complete delivery within a <span class="badge">2-week timeline</span>.</li>
+          <li>Improved <strong>Wardrobe feature adoption by 10%</strong> by redesigning the recommendation workflow with step-based preference capture and semi-automated logic to increase perceived personalisation.</li>
+        </ul>
+      </div>
+
+      <!-- Cherri Tech -->
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-header">
+          <span class="tl-role">Product Manager — Payments</span>
+          <span class="tl-period">Feb 2021 – Jun 2023</span>
+        </div>
+        <div class="tl-company">Cherri Tech · Taiwan</div>
+        <ul class="tl-list">
+          <li>Led rollout of <strong>3D Secure 2.0</strong> across <span class="badge">17 major banks</span>, translating regulatory and scheme requirements into product specs, API data requirements, and phased rollout plans with <span class="badge">zero service downtime</span>.</li>
+          <li>Delivered <strong>Mastercard Token Connect</strong> — turning tokenisation requirements into API integration plans, partner documentation, UAT coordination, and post-launch adoption tracking, enabling enterprise launch within 3 months.</li>
+          <li>Reduced onboarding processing time by <span class="badge">30%</span>, enabling <span class="badge">2,000+ merchants</span> to be activated within 3 days by redesigning and automating verification, approval, and activation workflows.</li>
+          <li>Planned and executed third-party provider integrations to support market expansion, aligning API requirements, payment flow design, and go-live readiness across Product, Engineering, Operations, and external partners.</li>
+        </ul>
+      </div>
+
+      <!-- APPX -->
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-header">
+          <span class="tl-role">IT Project Manager</span>
+          <span class="tl-period">Oct 2018 – Oct 2020</span>
+        </div>
+        <div class="tl-company">APPX Co. · Taiwan</div>
+        <ul class="tl-list">
+          <li>Led requirement discovery and technical delivery for enterprise clients including <strong>Yulon Motors</strong>, delivering an internal forum and data-sync solution in under 2 months.</li>
+          <li>Designed verification system backend for <strong>Gamania's Beanfun!</strong> platform, managing frontend &amp; backend collaboration, user flows, and production testing.</li>
+          <li>Integrated Taiwan DEKRA IST's Navision system with Germany's SAP via automated SFTP data synchronisation, with rigorous SQL-based database verification and test planning.</li>
+          <li>Managed end-to-end delivery from design through testing across B2B and B2C web platforms, coordinating scope, QA, and release activities to support on-time launches.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURED WORK ───────────────────────────────────────── -->
+<section id="work">
+  <div class="inner">
+    <p class="sec-label">Featured Work</p>
+    <h2 class="sec-title">Case studies</h2>
+    <p class="sec-desc">Selected cross-functional product initiatives — from fintech infrastructure to AI-powered consumer apps.</p>
+
+    <div class="work-grid">
+
+      <!-- Case 01 -->
+      <div class="work-card fade">
+        <div class="work-num">01</div>
+        <div class="work-tags">
+          <span class="work-tag">Payments</span>
+          <span class="work-tag">Fintech</span>
+          <span class="work-tag">Multi-bank Rollout</span>
+        </div>
+        <h3 class="work-title">3D Secure 2.0 — 17-Bank Regulatory Rollout</h3>
+        <p class="work-desc">
+          Managed a complex, multi-bank compliance rollout across Taiwan's major financial institutions,
+          requiring zero service downtime and a phased deployment strategy.
+        </p>
+        <ul class="work-points">
+          <li>Translated EMV 3DS regulatory &amp; scheme requirements into API specs, testing scope, and phased rollout plans</li>
+          <li>Coordinated UAT and go-live across <span class="impact-metric">17 bank partners</span> simultaneously</li>
+          <li>Achieved <span class="impact-metric">zero service downtime</span> through dependency management and phased sequencing</li>
+          <li>Integrated UnionPay 3DS 2.0 and coordinated authentication between TapPay's 3DS server and CTBC Bank</li>
+        </ul>
+      </div>
+
+      <!-- Case 02 -->
+      <div class="work-card fade fade-d1">
+        <div class="work-num">02</div>
+        <div class="work-tags">
+          <span class="work-tag">Tokenisation</span>
+          <span class="work-tag">Mastercard</span>
+          <span class="work-tag">Enterprise</span>
+        </div>
+        <h3 class="work-title">Mastercard Token Connect Integration</h3>
+        <p class="work-desc">
+          Led a tokenised payment API implementation to enhance transaction security, reduce fraud risk,
+          and unlock scalable payment capabilities for enterprise clients — delivered in 3 months.
+        </p>
+        <ul class="work-points">
+          <li>Aligned engineering, operations, GTM, acquiring bank partners, and Mastercard to define requirements</li>
+          <li>Translated regulatory and technical dependencies into a clear delivery roadmap</li>
+          <li>Coordinated UAT, partner documentation, and post-launch adoption tracking</li>
+          <li>Achieved <span class="impact-metric">10% adoption</span> among targeted enterprise clients post-launch</li>
+        </ul>
+      </div>
+
+      <!-- Case 03 -->
+      <div class="work-card fade fade-d2">
+        <div class="work-num">03</div>
+        <div class="work-tags">
+          <span class="work-tag">Operations</span>
+          <span class="work-tag">Automation</span>
+          <span class="work-tag">B2B</span>
+        </div>
+        <h3 class="work-title">Merchant Onboarding Automation</h3>
+        <p class="work-desc">
+          Redesigned a revenue-critical onboarding workflow for mega merchants to eliminate operational
+          bottlenecks and accelerate merchant activation at scale.
+        </p>
+        <ul class="work-points">
+          <li>Mapped end-to-end onboarding process with operations &amp; engineering to identify manual dependencies</li>
+          <li>Digitised and automated key verification, approval, and activation steps</li>
+          <li>Reduced processing time by <span class="impact-metric">30%</span></li>
+          <li>Enabled <span class="impact-metric">2,000+ merchants</span> to be activated within 3 days, accelerating revenue realisation</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="work-grid-2">
+
+      <!-- Case 04 -->
+      <div class="work-card fade">
+        <div class="work-num">04</div>
+        <div class="work-tags">
+          <span class="work-tag">AI App</span>
+          <span class="work-tag">Consumer</span>
+          <span class="work-tag">UX Redesign</span>
+        </div>
+        <h3 class="work-title">Style Advisor App — AI Consumer Redesign</h3>
+        <p class="work-desc">
+          Led the end-to-end product redesign of an AI-powered consumer app, coordinating distributed teams
+          across three countries to ship a major release within a tight 2-week window.
+        </p>
+        <ul class="work-points">
+          <li>Aligned roadmap priorities, UX decisions, and engineering scope under a strict deadline</li>
+          <li>Defined acceptance criteria &amp; launch metrics for third-party AI model integrations</li>
+          <li>Delivered complete redesign on schedule with cross-timezone team coordination (UK, Turkey, China)</li>
+        </ul>
+      </div>
+
+      <!-- Case 05 -->
+      <div class="work-card fade fade-d1">
+        <div class="work-num">05</div>
+        <div class="work-tags">
+          <span class="work-tag">Feature Growth</span>
+          <span class="work-tag">AI Recommendations</span>
+          <span class="work-tag">Data-driven</span>
+        </div>
+        <h3 class="work-title">Wardrobe Feature Optimisation</h3>
+        <p class="work-desc">
+          Improved feature adoption by redesigning the wardrobe recommendation workflow to deliver
+          more personalised and behaviour-driven suggestions, based on user interaction data analysis.
+        </p>
+        <ul class="work-points">
+          <li>Analysed user interaction data to identify drop-off points and prioritise enhancements</li>
+          <li>Introduced step-based preference capture flow and semi-automated recommendation logic</li>
+          <li>Increased feature adoption by <span class="impact-metric">10%</span> and strengthened engagement signals</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── MORE PROJECTS ───────────────────────────────────────── -->
+<section id="more">
+  <div class="inner">
+    <p class="sec-label">More Projects</p>
+    <h2 class="sec-title">Additional work</h2>
+    <p class="sec-desc">A broader range of integrations, platform builds, and research projects.</p>
+
+    <div class="mini-grid">
+      <div class="mini-card fade">
+        <div class="mini-icon">🏦</div>
+        <div class="mini-company">Cherri Tech</div>
+        <div class="mini-title">UBOT Bank Transaction Integration</div>
+        <div class="mini-desc">Connected UBOT banking services with Cherri Tech's payment system, ensuring compliance with financial security standards and optimising transaction times.</div>
+      </div>
+
+      <div class="mini-card fade fade-d1">
+        <div class="mini-icon">💳</div>
+        <div class="mini-company">Cherri Tech</div>
+        <div class="mini-title">Link Pay — Digital Wallet Expansion</div>
+        <div class="mini-desc">Added digital wallet support to expand payment capabilities, extended bank coverage to increase merchant adoption, and conducted UAT with 100+ test cases.</div>
+      </div>
+
+      <div class="mini-card fade fade-d2">
+        <div class="mini-icon">🏛️</div>
+        <div class="mini-company">APPX · Yulon Motors</div>
+        <div class="mini-title">Internal Forum &amp; Inventory Portal</div>
+        <div class="mini-desc">Delivered an internal forum and automated inventory &amp; repair record sync tools for Yulon Motors in under 2 months, from requirements through to launch.</div>
+      </div>
+
+      <div class="mini-card fade">
+        <div class="mini-icon">✅</div>
+        <div class="mini-company">APPX · Gamania</div>
+        <div class="mini-title">Beanfun! Verification Platform</div>
+        <div class="mini-desc">Designed a verification system backend for Gamania's Beanfun! platform, managing cross-team collaboration and conducting extensive production testing.</div>
+      </div>
+
+      <div class="mini-card fade fade-d1">
+        <div class="mini-icon">🔄</div>
+        <div class="mini-company">APPX · DEKRA</div>
+        <div class="mini-title">SAP International Data Transfer</div>
+        <div class="mini-desc">Integrated Taiwan DEKRA IST's Navision system with Germany's SAP, automating data synchronisation via SFTP with SQL-verified database validation.</div>
+      </div>
+
+      <div class="mini-card fade fade-d2">
+        <div class="mini-icon">📊</div>
+        <div class="mini-company">Warwick Business School</div>
+        <div class="mini-title">ML &amp; Data Analytics Projects</div>
+        <div class="mini-desc">Built predictive models in Python (Neural Network, XGBoost, Random Forest) for wine price prediction and flight delay analysis on 5.5M+ records using SQL and Tableau.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SKILLS ─────────────────────────────────────────────── -->
+<section id="skills">
+  <div class="inner">
+    <p class="sec-label">Capabilities</p>
+    <h2 class="sec-title">What I bring to the table</h2>
+    <p class="sec-desc">Technical depth combined with structured delivery and cross-functional leadership — across regulated, fast-moving, and complex product environments.</p>
+
+    <div class="skills-grid fade">
+      <div class="skill-card">
+        <div class="skill-header"><span class="skill-ico">🗺️</span> Product Management</div>
+        <div class="tags">
+          <span class="tag">Product Roadmap</span><span class="tag">PRDs</span>
+          <span class="tag">User Flows</span><span class="tag">Acceptance Criteria</span>
+          <span class="tag">Launch Planning</span><span class="tag">Rollout Strategy</span>
+          <span class="tag">Post-launch Iteration</span><span class="tag">Agile / Scrum</span>
+          <span class="tag">Hypothesis-driven Experimentation</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-header"><span class="skill-ico">🔌</span> Platform &amp; Integration</div>
+        <div class="tags">
+          <span class="tag">API Integrations</span><span class="tag">Third-party Systems</span>
+          <span class="tag">Data Schema Design</span><span class="tag">Sandbox Testing</span>
+          <span class="tag">Technical Documentation</span><span class="tag">System Interoperability</span>
+          <span class="tag">Implementation Planning</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-header"><span class="skill-ico">⚙️</span> B2B &amp; Operational Workflows</div>
+        <div class="tags">
+          <span class="tag">Onboarding Workflows</span><span class="tag">Process Automation</span>
+          <span class="tag">Partner Enablement</span><span class="tag">UAT Coordination</span>
+          <span class="tag">Workflow Optimisation</span><span class="tag">Stakeholder Requirements</span>
+          <span class="tag">Internal Tooling</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-header"><span class="skill-ico">🏛️</span> Regulated &amp; Complex Delivery</div>
+        <div class="tags">
+          <span class="tag">Compliance-driven Delivery</span><span class="tag">Risk Management</span>
+          <span class="tag">Banking Partners</span><span class="tag">Launch Governance</span>
+          <span class="tag">Dependency Management</span><span class="tag">External Provider Coordination</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-header"><span class="skill-ico">📈</span> Data &amp; Analytics</div>
+        <div class="tags">
+          <span class="tag">SQL</span><span class="tag">Tableau</span>
+          <span class="tag">Python</span><span class="tag">KPI Definition</span>
+          <span class="tag">Data-driven Decision Making</span><span class="tag">Feature Adoption Analysis</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-header"><span class="skill-ico">🛠️</span> Tools</div>
+        <div class="tags">
+          <span class="tag">Jira</span><span class="tag">Confluence</span>
+          <span class="tag">Figma</span><span class="tag">Postman</span>
+          <span class="tag">GitHub</span><span class="tag">SQL</span>
+          <span class="tag">Tableau</span><span class="tag">Asana</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ─────────────────────────────────────────────── -->
+<section id="contact">
+  <div class="inner">
+    <p class="sec-label">Contact</p>
+    <h2 class="sec-title">Let's work together</h2>
+    <p class="sec-desc">
+      Open to Product Manager roles in the UK — particularly in fintech, AI products, or B2B platforms.
+      Reach out and let's talk.
+    </p>
+
+    <div class="contact-row">
+      <a href="mailto:stacyyu767@gmail.com" class="contact-link">
+        <span class="c-icon">✉️</span>
+        stacyyu767@gmail.com
+      </a>
+      <a href="https://www.linkedin.com/in/yutingtw" target="_blank" rel="noopener" class="contact-link">
+        <span class="c-icon">💼</span>
+        LinkedIn Profile
+      </a>
+      <a href="tel:+447884842130" class="contact-link">
+        <span class="c-icon">📞</span>
+        07884 842130
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────── -->
+<footer>
+  <p>© 2026 Stacy Huang · Technical Product Manager · London, UK</p>
+</footer>
+
+<script>
+  // Intersection observer for fade-in animations
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade').forEach(el => io.observe(el));
+
+  // Active nav link highlight on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const links = document.querySelectorAll('.nav-links a');
+
+  const navIO = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        links.forEach(l => l.removeAttribute('style'));
+        const active = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
+        if (active) active.style.color = '#f0f0f6';
+      }
+    });
+  }, { threshold: 0.45 });
+
+  sections.forEach(s => navIO.observe(s));
+</script>
+
+</body>
+</html>
